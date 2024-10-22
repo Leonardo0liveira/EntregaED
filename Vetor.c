@@ -3,7 +3,7 @@
 #define TAMANHO 5
 
 void insere_inicio(int v[], int tamanho, int valor){
-    for (int i = tamanho - 1; i > 0; i--){
+    for (int i = tamanho - 1; i > 0; i--){  
         v[i] = v[i - 1];  
     }
     v[0] = valor;  

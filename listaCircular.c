@@ -1,15 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct Node {
-    int data;
+    char musica[100];
     struct Node* next;
 } Node;
 
 Node* head = NULL;
-void insere_inicio(int valor) {
+
+void insere_inicio(char* valor) {
     Node* novo_node = (Node*)malloc(sizeof(Node));
-    novo_node->data = valor;
+    strcpy(novo_node->musica, valor);
     
     if (head == NULL) {
         head = novo_node;
@@ -25,10 +27,10 @@ void insere_inicio(int valor) {
     }
 }
 
-void insere_meio(int pos, int valor) {
+void insere_meio(int pos, char* valor) {
     Node* novo_node = (Node*)malloc(sizeof(Node));
-    novo_node->data = valor;
-
+    strcpy(novo_node->musica, valor);
+    
     if (head == NULL || pos == 0) {
         insere_inicio(valor);
         return;
@@ -48,10 +50,10 @@ void insere_meio(int pos, int valor) {
     temp->next = novo_node;
 }
 
-void insere_fim(int valor) {
+void insere_fim(char* valor) {
     Node* novo_node = (Node*)malloc(sizeof(Node));
-    novo_node->data = valor;
-
+    strcpy(novo_node->musica, valor);
+    
     if (head == NULL) {
         head = novo_node;
         novo_node->next = head;
@@ -65,7 +67,7 @@ void insere_fim(int valor) {
     }
 }
 
-void busca(int valor) {
+void busca(char* valor) {
     if (head == NULL) {
         printf("A lista está vazia!\n");
         return;
@@ -73,14 +75,14 @@ void busca(int valor) {
 
     Node* temp = head;
     do {
-        if (temp->data == valor) {
-            printf("Música %d encontrada.\n", valor);
+        if (strcmp(temp->musica, valor) == 0) {
+            printf("Música %s encontrada.\n", valor);
             return;
         }
         temp = temp->next;
     } while (temp != head);
     
-    printf("Música %d não encontrada.\n", valor);
+    printf("Música %s não encontrada.\n", valor);
 }
 
 void remove_inicio() {
@@ -103,6 +105,7 @@ void remove_inicio() {
         free(temp);
     }
 }
+
 void remove_meio(int pos) {
     if (head == NULL) {
         printf("A lista está vazia!\n");
@@ -131,6 +134,7 @@ void remove_meio(int pos) {
         free(node_a_remover);
     }
 }
+
 void remove_fim() {
     if (head == NULL) {
         printf("A lista está vazia!\n");
@@ -151,6 +155,7 @@ void remove_fim() {
         free(temp);
     }
 }
+
 void imprime_lista() {
     if (head == NULL) {
         printf("A lista está vazia!\n");
@@ -159,21 +164,21 @@ void imprime_lista() {
 
     Node* temp = head;
     do {
-        printf("Música %d\n", temp->data);
+        printf("Música: %s\n", temp->musica);
         temp = temp->next;
     } while (temp != head);
 }
 
 int main() {
-    insere_inicio(1);
-    insere_fim(2);
-    insere_meio(1, 3);
-    insere_fim(4);
+    insere_inicio("Música 1");
+    insere_fim("Música 2");
+    insere_meio(1, "Música 3");
+    insere_fim("Música 4");
 
     printf("Lista atual de músicas:\n");
     imprime_lista();
 
-    busca(3);
+    busca("Música 3");
 
     remove_meio(1);
     remove_inicio();
